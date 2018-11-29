@@ -19,5 +19,4 @@ HashMap 详解
 ## HashMap 详解
 #### 1. 底层实现原理：数组+链表+红黑树（JDK1.8增加了红黑树部分）
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/hashmap_datas_tructure2.png)
-###### Node是HashMap的一个内部类，实现了Map.Entry接口，本质是就是一个映射(键值对)。
 
