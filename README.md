@@ -44,4 +44,4 @@ HashMap 详解
     这样，显然不符合 Hash 算法均匀分布的原则。
     如果长度是 16 或者是 2 的幂， Length-1 的值的所有二进制位全为 1，这种情况下，index的结果等同于HashCode后几位的值。
     只要输入的HashCode本身分布均匀，Hash算法的结果就是均匀的。
-
+#### 3. HashMap负载因子默认是0.75，可设置，当map填满了75%的bucket时候，将会创建原来HashMap大小两倍的bucket数组，来重新调整map的大小，并将原来的对象放入新的bucket数组中,这个过程叫做rehashing，因为它调用hash方法找到新的bucket位置。
