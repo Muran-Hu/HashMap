@@ -82,12 +82,43 @@ HashMap 详解
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code1.png)
 #### 假如此时线程B遍历到Entry3对象，刚执行完红框里的这行代码，线程就被挂起。对于线程B来说：
 
-## e = Entry3
-## next = Entry2
+    #### e = Entry3
+    #### next = Entry2
 
-这时候线程A畅通无阻地进行着Rehash，当ReHash完成后，结果如下（图中的e和next，代表线程B的两个引用）：
-
+#### 这时候线程A畅通无阻地进行着Rehash，当ReHash完成后，结果如下（图中的e和next，代表线程B的两个引用）：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash3.png)
+直到这一步，看起来没什么毛病。接下来线程B恢复，继续执行属于它自己的ReHash。线程B刚才的状态是：
+    #### e = Entry3
+    #### next = Entry2
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code2.png)
+#### 当执行到上面这一行时，显然 i = 3，因为刚才线程A对于Entry3的hash结果也是3。
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code3.png)
-![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code4.png)
+我们继续执行到这两行，Entry3放入了线程B的数组下标为3的位置，并且e指向了Entry2。此时e和next的指向如下：
+    #### e = Entry2
+    #### next = Entry2
+#### 整体情况如图所示：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash4.png)
+#### 接着是新一轮循环，又执行到红框内的代码行：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code1.png)
+    #### e = Entry2
+    #### next = Entry3
+#### 整体情况如图所示：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash5.png)
+#### 接下来执行下面的三行，用头插法把Entry2插入到了线程B的数组的头结点：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code5.png)
+#### 整体情况如图所示：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash6.png)
+#### 第三次循环开始，又执行到红框的代码：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code1.png)
+    #### e = Entry3
+    #### next = Entry3.next = null
+#### 最后一步，当我们执行下面这一行的时候，见证奇迹的时刻来临了：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code5.png)
+    #### newTable[i] = Entry2
+    #### e = Entry3
+    #### Entry2.next = Entry3
+    #### Entry3.next = Entry2
+#### 链表出现了环形！
+#### 整体情况如图所示：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash7.png)
+#### 此时，问题还没有直接产生。当调用Get查找一个不存在的Key，而这个Key的Hash结果恰好等于3的时候，由于位置3带有环形链表，所以程序将会进入死循环！
