@@ -44,4 +44,13 @@ HashMap 详解
     这样，显然不符合 Hash 算法均匀分布的原则。
     如果长度是 16 或者是 2 的幂， Length-1 的值的所有二进制位全为 1，这种情况下，index的结果等同于HashCode后几位的值。
     只要输入的HashCode本身分布均匀，Hash算法的结果就是均匀的。
-#### 3. HashMap负载因子默认是0.75，可设置，当map填满了75%的bucket时候，将会创建原来HashMap大小两倍的bucket数组，来重新调整map的大小，并将原来的对象放入新的bucket数组中,这个过程叫做rehashing，因为它调用hash方法找到新的bucket位置。
+#### 3. HashMap 扩容(Resize)
+###### 1) 影响发生 Resize 的因素有两个：
+        1. Capacity - HashMap 当前长度
+        2. LoadFactor - 负载因子，默认值 0.75f
+###### 2) 发生 Resize 条件：HashMap.Size >= Capacity * LoadFactor
+###### 3) Resize 过程：
+        1. 扩容：创建一个新的Entry空数组，长度是原数组的2倍。
+        2. ReHash：遍历原 Entry 数组，把所有的 Entry 重新 Hash 到新数组。为什么要重新Hash呢？因为长度扩大以后，Hash 的规则也随之改变。
+        回顾：index = HashCode(key) & (Length - 1)
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/hashmap.png)
