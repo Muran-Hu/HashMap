@@ -95,9 +95,11 @@ HashMap 详解
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code2.png)
 #### 当执行到上面这一行时，显然 i = 3，因为刚才线程A对于Entry3的hash结果也是3。
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code3.png)
-我们继续执行到这两行，Entry3放入了线程B的数组下标为3的位置，并且e指向了Entry2。此时e和next的指向如下：
+#### 我们继续执行到这两行，Entry3放入了线程B的数组下标为3的位置，并且e指向了Entry2。此时e和next的指向如下：
+
     #### e = Entry2
     #### next = Entry2
+    
 #### 整体情况如图所示：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash4.png)
 #### 接着是新一轮循环，又执行到红框内的代码行：
@@ -112,14 +114,18 @@ HashMap 详解
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash6.png)
 #### 第三次循环开始，又执行到红框的代码：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code1.png)
+
     #### e = Entry3
     #### next = Entry3.next = null
+    
 #### 最后一步，当我们执行下面这一行的时候，见证奇迹的时刻来临了：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code5.png)
+
     #### newTable[i] = Entry2
     #### e = Entry3
     #### Entry2.next = Entry3
     #### Entry3.next = Entry2
+    
 #### 链表出现了环形！
 #### 整体情况如图所示：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash7.png)
