@@ -53,4 +53,4 @@ HashMap 详解
         1. 扩容：创建一个新的Entry空数组，长度是原数组的2倍。
         2. ReHash：遍历原 Entry 数组，把所有的 Entry 重新 Hash 到新数组。为什么要重新Hash呢？因为长度扩大以后，Hash 的规则也随之改变。
         回顾：index = HashCode(key) & (Length - 1)
-![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/hashmap.png)
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/HashMap%20Resize.png)
