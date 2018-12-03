@@ -109,7 +109,7 @@ HashMap 详解
     #### next = Entry3
     
 #### 整体情况如图所示：
-![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash4.png)
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash5.png)
 #### 接下来执行下面的三行，用头插法把Entry2插入到了线程B的数组的头结点：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code5.png)
 #### 整体情况如图所示：
