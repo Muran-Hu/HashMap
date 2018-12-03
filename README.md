@@ -88,8 +88,10 @@ HashMap 详解
 #### 这时候线程A畅通无阻地进行着Rehash，当ReHash完成后，结果如下（图中的e和next，代表线程B的两个引用）：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash3.png)
 直到这一步，看起来没什么毛病。接下来线程B恢复，继续执行属于它自己的ReHash。线程B刚才的状态是：
+    
     #### e = Entry3
     #### next = Entry2
+    
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code2.png)
 #### 当执行到上面这一行时，显然 i = 3，因为刚才线程A对于Entry3的hash结果也是3。
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code3.png)
