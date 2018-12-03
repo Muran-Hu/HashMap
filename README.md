@@ -55,3 +55,24 @@ HashMap 详解
         为什么要重新Hash呢？因为长度扩大以后，Hash 的规则也随之改变。
         回顾：index = HashCode(key) & (Length - 1)
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/HashMap%20Resize.png)
+## Rehash 死循环 - 环形链表形成过程
+        /**
+         * Transfers all entries from current table to newTable.
+         */
+        void transfer(Entry[] newTable, boolean rehash) {
+            int newCapacity = newTable.length;
+            for (Entry<K,V> e : table) {
+                while(null != e) {
+                    Entry<K,V> next = e.next;
+                    if (rehash) {
+                        e.hash = null == e.key ? 0 : hash(e.key);
+                    }
+                    int i = indexFor(e.hash, newCapacity);
+                    e.next = newTable[i];
+                    newTable[i] = e;
+                    e = next;
+                }
+            }
+        }
+#### 假设一个 HashMap 已经到了 Resize 的临界点。此时有两个线程A和B，在同一时刻对 HashMap 进行 Put 操作：
+
