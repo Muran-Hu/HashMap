@@ -75,4 +75,6 @@ HashMap 详解
             }
         }
 #### 假设一个 HashMap 已经到了 Resize 的临界点。此时有两个线程A和B，在同一时刻对 HashMap 进行 Put 操作：
-
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash1.png)
+#### 此时达到Resize条件，两个线程各自进行Rezie的第一步，也就是扩容：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash1.png)
