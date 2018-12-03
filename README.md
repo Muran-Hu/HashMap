@@ -79,4 +79,15 @@ HashMap 详解
 #### 此时达到Resize条件，两个线程各自进行Rezie的第一步，也就是扩容：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash2.png)
 #### 这时候，两个线程都走到了 ReHash 的步骤。让我们回顾一下ReHash的代码：
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code1.png)
+#### 假如此时线程B遍历到Entry3对象，刚执行完红框里的这行代码，线程就被挂起。对于线程B来说：
 
+## e = Entry3
+## next = Entry2
+
+这时候线程A畅通无阻地进行着Rehash，当ReHash完成后，结果如下（图中的e和next，代表线程B的两个引用）：
+
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code2.png)
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code3.png)
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code4.png)
+![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash%20code5.png)
