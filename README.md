@@ -132,3 +132,7 @@ HashMap 详解
 #### 整体情况如图所示：
 ![示例图片](https://github.com/Muran-Hu/HashMap/blob/master/Rehash7.png)
 #### 此时，问题还没有直接产生。当调用Get查找一个不存在的Key，而这个Key的Hash结果恰好等于3的时候，由于位置3带有环形链表，所以程序将会进入死循环！
+## 总结：
+#### 1. HashMap 在插入元素过多的时候需要进行 Resize，Resize 的条件是：
+        HashMap.Size >= Capacity * LoadFactor
+#### 2. HashMap 的 Resize 包含扩容和 Rehash 两个步骤，ReHash 在并发的情况下可能会形成链表环。
